@@ -1,0 +1,15 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignalR Accountant</title>
+    {{bundler.renderStyles("~/styles")}}
+</head>
+<body ng-app="accountant" ng-controller="accountantController">
+
+{{bundler.renderScripts("~/libs")}}
+{{bundler.renderScripts("~/app")}}
+
+</body>
+</html>
