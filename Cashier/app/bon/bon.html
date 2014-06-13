@@ -1,0 +1,69 @@
+<div class="col-sm-9">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Bezeichnung</th>
+                    <th class="right">Menge</th>
+                    <th class="right">Einzelpr.</th>
+                    <th colspan="3" class="right">Gesamtpr.</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="entry in entries" ng-class="{ info: entry === changeEntry }" ng-swipe-left="showRemove(entry)">
+                    <td>{{$index + 1}}</td>
+                    <td>{{entry.text}}</td>
+                    <td class="right" ng-class="{ warning: entry === changeEntry && changeMode === 'count' }" ng-click="changeCount(entry)">{{entry.count}}</td>
+                    <td class="right" ng-class="{ warning: entry === changeEntry && changeMode === 'price' }" ng-click="changePrice(entry)">{{entry.price | number:2}}</td>
+                    <td class="right">{{entry.sum | number:2}}</td>
+                    <td class="cancel" ng-show="entry === removeEntry" ng-click="cancelRemove()">Abbrechen</td>
+                    <td class="delete" ng-show="entry === removeEntry" ng-click="remove($index)">Löschen</td>
+                </tr>
+                <tr>
+                    <td colspan="7" class="center lead"><a ng-click="showAdd()" class="btn btn-info btn-lg" ng-disabled="addEntry"><span class="glyphicon glyphicon-shopping-cart"></span> Neue Position</a></td>
+                </tr>
+                <tr ng-show="addEntry">
+                    <td colspan="7">
+                        <form class="form-horizontal" name="form">
+                            <div class="form-group">
+                                <label for="product" class="col-sm-3 control-label">Produkt</label>
+
+                                <div class="col-sm-9">
+                                    <button type="button" class="btn btn-default" name="product" ng-model="addEntry.product" ng-options="product as product.name for product in products" bs-select placeholder="Produkt wählen" required></button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="count" class="col-sm-3 control-label">Menge</label>
+
+                                <div class="col-sm-2">
+                                    <input type="number" class="form-control" name="count" ng-model="addEntry.count" required>
+                                </div>
+                                <div class="col-sm-5">
+                                    <button type="button" class="btn btn-danger" ng-click="countDown()">- 1</button>
+                                    <button type="button" class="btn btn-info" ng-click="countUp()">+ 1</button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="price" class="col-sm-3 control-label">Preis</label>
+
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control" name="price" ng-model="addEntry.price" required>
+                                </div>
+                            </div>
+                        </form>
+                        <button type="button" class="btn btn-warning btn-lg pull-left" ng-click="cancelAdd()">Abbrechen</button>
+                        <button type="button" class="btn btn-primary btn-lg pull-right" ng-click="add()" ng-disabled="form.$invalid">Hinzufügen</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="panel-footer lead">Gesamt: <span class="pull-right">{{amount | number:2}}</span></div>
+    </div>
+</div>
+
+<div class="col-sm-3">
+    <number-pad number="number(value)"></number-pad>
+</div>

@@ -1,0 +1,48 @@
+body {
+    padding: 20px 0;
+}
+
+number-pad .row {
+    margin-bottom: 15px;
+}
+
+number-pad .row:last-child {
+    margin-bottom: 0;
+}
+
+.right {
+    text-align: right !important;
+}
+
+.center {
+    text-align: center !important;
+}
+
+.panel-body .table {
+    margin-bottom: 0;
+}
+
+.panel-footer.lead {
+    margin-bottom: 0;
+}
+
+[ng-click] {
+    cursor: pointer;
+}
+
+a:hover {
+    text-decoration: none !important;
+}
+
+td.cancel, td.delete {
+    text-align: center;
+    width: 100px;
+    border-bottom: 1px solid #ddd;
+}
+
+td.delete {
+    background-color: red;
+    border-top: 1px solid red !important;
+    border-bottom: 1px solid red;
+    color: white;
+}
