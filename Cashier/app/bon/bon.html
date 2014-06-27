@@ -15,7 +15,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr class="entry animate" ng-repeat="item in entries" ng-class="{ info: item === entry }" ng-swipe-left="remove(item)" ng-click="edit(item)">
+                            <tr class="entry animate" ng-repeat="item in entries" ng-class="{ info: item.id === entry.id }" ng-swipe-left="remove(item)" ng-click="edit(item)">
                                 <td>{{$index + 1}}</td>
                                 <td>{{item.text}}</td>
                                 <td class="right" ng-class="{ warning: item === numberEntry && changeMode === 'count' }" ng-click="changeCount($event, item)">{{item.count}}</td>

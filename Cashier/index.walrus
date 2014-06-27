@@ -14,6 +14,10 @@
             <div class="navbar-header">
                 <span class="navbar-brand">Cashier</span>
             </div>
+
+            <ul class="nav navbar-nav">
+                <li><a ng-click="bon()">Bon</a></li>
+            </ul>
         </div>
     </div>
 

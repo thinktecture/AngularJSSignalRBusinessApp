@@ -17,6 +17,10 @@
                     products[product.id] = product;
                 });
 
+                scope.$on(productService.$productChanged, function (event, product) {
+                    products[product.id] = product;
+                });
+
                 scope.$on(billingService.$entryAdded, function (event, id, productId, count, price) {
                     var turnover = $filter('number')(count * price, 2);
 

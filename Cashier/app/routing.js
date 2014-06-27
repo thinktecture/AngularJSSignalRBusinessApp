@@ -9,7 +9,7 @@
             })
 
             .otherwise({
-                redirectTo: '/bon'
+                redirectTo: '/'
             });
     });
 })();
