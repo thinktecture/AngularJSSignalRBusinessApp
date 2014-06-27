@@ -14,7 +14,7 @@ var args = process.argv.slice(2);
 
 app.configure(function () {
     app.engine("walrus", consolidate.walrus);
-    app.set('port', args[0] || 8090);
+    app.set('port', args[0] || 8091);
     app.set('views', appDir);
     app.set('view engine', 'walrus');
     app.use(express.favicon());

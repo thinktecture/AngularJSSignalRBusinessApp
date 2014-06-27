@@ -53,7 +53,7 @@
             fractionPart = false;
         };
 
-        $scope.$on('numberPadValue', function (event, value) {
+        $scope.$on('numberpad:value', function (event, value) {
             $scope.value = value;
             clearOnInput = true;
         });
@@ -64,7 +64,7 @@
     app.module.directive('numberPad', function () {
         return {
             restrict: 'E',
-            templateUrl: 'appServices/directives/numberPad.html',
+            templateUrl: 'app/bon/numberPad.html',
             controller: 'numberPadController',
             scope: {
                 number: '&'

@@ -1,44 +1,46 @@
-<div class="col-sm-9">
-    <div class="panel panel-default">
-        <div class="panel-body">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Bezeichnung</th>
-                    <th class="right">Menge</th>
-                    <th class="right">Einzelpr.</th>
-                    <th colspan="3" class="right">Gesamtpr.</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="entry in entries" ng-class="{ info: entry === changeEntry }" ng-swipe-left="showRemove(entry)">
-                    <td>{{$index + 1}}</td>
-                    <td>{{entry.text}}</td>
-                    <td class="right" ng-class="{ warning: entry === changeEntry && changeMode === 'count' }" ng-click="changeCount(entry)">{{entry.count}}</td>
-                    <td class="right" ng-class="{ warning: entry === changeEntry && changeMode === 'price' }" ng-click="changePrice(entry)">{{entry.price | number:2}}</td>
-                    <td class="right">{{entry.sum | number:2}}</td>
-                    <td class="cancel" ng-show="entry === removeEntry" ng-click="cancelRemove()">Abbrechen</td>
-                    <td class="delete" ng-show="entry === removeEntry" ng-click="remove($index)">Löschen</td>
-                </tr>
-                <tr>
-                    <td colspan="7" class="center lead"><a ng-click="showAdd()" class="btn btn-info btn-lg" ng-disabled="addEntry"><span class="glyphicon glyphicon-shopping-cart"></span> Neue Position</a></td>
-                </tr>
-                <tr ng-show="addEntry">
-                    <td colspan="7">
+<div class="row">
+    <div class="col-sm-9">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="bill row">
+                    <div class="col-sm-12">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Bezeichnung</th>
+                                <th class="right">Menge</th>
+                                <th class="right">Einzelpr.</th>
+                                <th class="right">Gesamtpr.</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="entry animate" ng-repeat="entry in entries" ng-class="{ info: $index === selected.$index }" ng-swipe-left="remove(entry, $index)" ng-click="edit(entry, $index)">
+                                <td>{{$index + 1}}</td>
+                                <td>{{entry.text}}</td>
+                                <td class="right" ng-class="{ warning: entry === numberEntry && changeMode === 'count' }" ng-click="changeCount($event, entry)">{{entry.count}}</td>
+                                <td class="right" ng-class="{ warning: entry === numberEntry && changeMode === 'price' }" ng-click="changePrice($event, entry)">{{entry.price | number:2}}</td>
+                                <td class="right">{{entry.sum | number:2}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
                         <form class="form-horizontal" name="form">
                             <div class="form-group">
                                 <label for="product" class="col-sm-3 control-label">Produkt</label>
 
                                 <div class="col-sm-9">
-                                    <button type="button" class="btn btn-default" name="product" ng-model="addEntry.product" ng-options="product as product.name for product in products" bs-select placeholder="Produkt wählen" required></button>
+                                    <button type="button" class="btn btn-default" id="product" name="product" ng-model="selected.product" ng-options="product as product.name for product in products" bs-select placeholder="Produkt wählen" required></button>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="count" class="col-sm-3 control-label">Menge</label>
 
                                 <div class="col-sm-2">
-                                    <input type="number" class="form-control" name="count" ng-model="addEntry.count" required>
+                                    <input type="number" class="form-control" id="count" name="count" ng-model="selected.count" required>
                                 </div>
                                 <div class="col-sm-5">
                                     <button type="button" class="btn btn-danger" ng-click="countDown()">- 1</button>
@@ -49,21 +51,21 @@
                                 <label for="price" class="col-sm-3 control-label">Preis</label>
 
                                 <div class="col-sm-3">
-                                    <input type="text" class="form-control" name="price" ng-model="addEntry.price" required>
+                                    <input type="text" class="form-control" id="price" name="price" ng-model="selected.price" required>
                                 </div>
                             </div>
                         </form>
-                        <button type="button" class="btn btn-warning btn-lg pull-left" ng-click="cancelAdd()">Abbrechen</button>
-                        <button type="button" class="btn btn-primary btn-lg pull-right" ng-click="add()" ng-disabled="form.$invalid">Hinzufügen</button>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+                        <button type="button" class="btn btn-warning btn-lg pull-left" ng-click="cancel()" ng-show="selected.$index >= 0">Abbrechen</button>
+                        <button type="button" class="btn btn-primary btn-lg pull-right" ng-click="add()" ng-hide="selected.$index >= 0" ng-disabled="form.$invalid">Hinzufügen</button>
+                        <button type="button" class="btn btn-primary btn-lg pull-right" ng-click="change()" ng-show="selected.$index >= 0" ng-disabled="form.$invalid">Ändern</button>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer lead">Gesamt: <span class="pull-right">{{amount | number:2}}</span></div>
         </div>
-        <div class="panel-footer lead">Gesamt: <span class="pull-right">{{amount | number:2}}</span></div>
     </div>
-</div>
 
-<div class="col-sm-3">
-    <number-pad number="number(value)"></number-pad>
+    <div class="col-sm-3">
+        <number-pad number="number(value)"></number-pad>
+    </div>
 </div>

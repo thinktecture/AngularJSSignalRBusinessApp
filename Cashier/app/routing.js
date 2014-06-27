@@ -5,8 +5,7 @@
         $routeProvider
             .when('/bon', {
                 templateUrl: '/app/bon/bon.html',
-                controller: 'bonController',
-                resolve: app.resolver.BonController
+                controller: 'bonController'
             })
 
             .otherwise({

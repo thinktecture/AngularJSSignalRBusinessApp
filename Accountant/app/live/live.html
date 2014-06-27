@@ -1,0 +1,24 @@
+<div class="panel panel-default">
+    <div class="panel-body">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Bezeichnung</th>
+                <th class="right">Menge</th>
+                <th class="right">Einzelpr.</th>
+                <th class="right">Gesamtpr.</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="entry animate" ng-repeat="entry in entries">
+                <td>{{$index + 1}}</td>
+                <td>{{entry.text}}</td>
+                <td class="right">{{entry.count}}</td>
+                <td class="right">{{entry.price | number:2}}</td>
+                <td class="right">{{entry.sum | number:2}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

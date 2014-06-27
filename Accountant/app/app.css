@@ -38,43 +38,23 @@ tr.entry.ng-animate {
     display: table-row !important;
 }
 
-tr.entry.ng-enter,
-tr.entry.ng-leave.ng-leave-active {
+tr.entry.ng-enter {
     opacity: 0;
 }
 
-tr.entry.ng-leave.ng-leave-active {
-    background-color: yellow;
-}
-
-tr.entry.ng-leave,
 tr.entry.ng-enter.ng-enter-active {
     opacity: 1;
-    background-color: white;
+    background-color: lightgreen;
+}
+
+tr.entry.ng-leave {
+    display: none !important;
 }
 
 .right {
     text-align: right !important;
 }
 
-number-pad .row {
-    margin-bottom: 15px;
-}
-
-number-pad .row:last-child {
+.panel-body .table {
     margin-bottom: 0;
-}
-
-.bill {
-    max-height: 300px;
-    overflow: scroll;
-    -webkit-overflow-scrolling: touch;
-}
-
-.panel-footer.lead {
-    margin-bottom: 0;
-}
-
-a:hover {
-    text-decoration: none !important;
 }

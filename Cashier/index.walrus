@@ -9,15 +9,19 @@
 <body ng-app="cashier" ng-controller="cashierController">
 
 <div class="container">
-    <nav class="navbar navbar-default">
+    <div class="navbar navbar-default">
         <div class="container">
             <div class="navbar-header">
                 <span class="navbar-brand">Cashier</span>
             </div>
         </div>
-    </nav>
+    </div>
 
-    <div ng-view class="row"></div>
+    <div class="row">
+        <div class="col-md-12" ng-view></div>
+    </div>
+
+    <div class="alert alert-success animate" ng-show="alert.visible"><strong ng-bind="alert.header"></strong> <span ng-bind="alert.message"></span></div>
 </div>
 
 {{bundler.renderScripts("~/libs")}}

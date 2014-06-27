@@ -3,138 +3,185 @@
 
     /**
      * @param $scope
-     * @param products
-     * @param {AccountingService} accountingService
+     * @param {AlertService} alertService
+     * @param {ProductService} productService
+     * @param {BillingService} billingService
      * @constructor
      */
-    function BonController($scope, products, accountingService) {
-        accountingService.start($scope);
+    function BonController($scope, alertService, productService, billingService) {
+        productService.getProducts().then(function (products) {
+            $scope.products = products;
+        });
 
         $scope.entries = [];
-        $scope.products = products;
+
+        resetSelected();
+
+        $scope.$on(productService.$productAdded, function (event, product) {
+            $scope.products.push(product);
+
+            alertService.show('Neues Produkt verfügbar!', 'Das Produkt ' + product.name + ' wurde soeben hinzugefügt.');
+        });
+
+        $scope.$on(productService.$productChanged, function (event, product) {
+            for (var i = 0; i < $scope.products.length; i++) {
+                var item = $scope.products[i];
+                if (item.id === product.id) {
+                    angular.extend(item, product);
+                    return;
+                }
+            }
+        });
 
         $scope.$watch('entries', function (newVal) {
             var sum = 0;
             for (var i = 0; i < newVal.length; i++) {
                 sum += newVal[i].sum;
             }
+
             $scope.amount = sum;
         }, true);
 
-        $scope.showAdd = function () {
-            $scope.addEntry = {};
-            $scope.$watch('addEntry.product', function (newValue) {
-                if (newValue) {
-                    if (!$scope.form.count.$dirty) {
-                        $scope.addEntry.count = 1;
-                    }
-                    if (!$scope.form.price.$dirty) {
-                        $scope.addEntry.price = newValue.price;
-                    }
+        $scope.$watch('selected.product', function (newValue) {
+            if (newValue) {
+                if (!$scope.form.price.$dirty) {
+                    $scope.selected.price = newValue.price;
                 }
-            });
-        };
-
-        $scope.cancelAdd = function () {
-            $scope.addEntry = null;
-        };
+            }
+        });
 
         $scope.countDown = function () {
-            if ($scope.addEntry.count > 1) {
-                $scope.addEntry.count--;
+            if ($scope.selected.count > 1) {
+                $scope.selected.count--;
             }
         };
 
         $scope.countUp = function () {
-            $scope.addEntry.count++;
+            $scope.selected.count++;
+        };
+
+        function resetNumberPad() {
+            $scope.numberEntry = null;
+            $scope.$broadcast('numberpad:value', 0);
+        }
+
+        function resetSelected() {
+            $scope.selected = { count: 1 };
+        }
+
+        $scope.edit = function (entry, index) {
+            if (entry.remove) {
+                return;
+            }
+
+            entry.$index = index;
+            entry.previousCount = entry.count;
+
+            $scope.numberEntry = null;
+            $scope.$broadcast('numberpad:value', 0);
+
+            $scope.selected = angular.extend({}, entry);
+        };
+
+        $scope.cancel = function () {
+            resetSelected();
         };
 
         $scope.add = function () {
-            var addEntry = $scope.addEntry;
-            $scope.addEntry = null;
+            var entry = $scope.selected;
+            resetSelected();
 
-            addEntry.text = addEntry.product.name;
-            addEntry.sum = addEntry.count * addEntry.price;
+            entry.text = entry.product.name;
+            entry.sum = entry.count * entry.price;
 
-            accountingService.addBillingEntry(addEntry.product.id, addEntry.count, addEntry.price).then(function (result) {
-                addEntry.id = result;
-            });
+            billingService.addEntry(entry);
 
-            $scope.entries.push(addEntry);
+            $scope.entries.push(entry);
+        };
+
+        $scope.change = function () {
+            var entry = $scope.selected;
+            resetSelected();
+
+            entry.text = entry.product.name;
+            entry.sum = entry.count * entry.price;
+
+            billingService.changeEntry(entry);
+
+            var index = entry.$index;
+            delete entry.$index;
+
+            angular.extend($scope.entries[index], entry);
+        };
+
+        $scope.remove = function (entry, index) {
+            billingService.removeEntry(entry);
+
+            entry.remove = true;
+
+            resetNumberPad();
+            resetSelected();
+
+            $scope.entries.splice(index, 1);
         };
 
         $scope.number = function (value) {
-            if ($scope.changeEntry) {
-                var changeEntry = $scope.changeEntry;
-                $scope.changeEntry = null;
+            if ($scope.numberEntry) {
+                var changeEntry = $scope.numberEntry;
+                $scope.numberEntry = null;
+
+                changeEntry.previousCount = changeEntry.count;
 
                 switch ($scope.changeMode) {
                     case 'count':
                         changeEntry.count = value;
-                        accountingService.changeBillingEntryCount(changeEntry.id, value);
+                        billingService.changeEntry(changeEntry);
                         break;
-                    case'price':
+                    case 'price':
                         changeEntry.price = value;
-                        accountingService.changeBillingEntryPrice(changeEntry.id, value);
+                        billingService.changeEntry(changeEntry);
                         break;
                 }
 
                 changeEntry.sum = changeEntry.count * changeEntry.price;
             } else {
-                var addEntry = { text: 'Sonderposition', count: 1, price: value};
-                addEntry.sum = addEntry.count * addEntry.price;
+                var addEntry = {
+                    product: {},
+                    text: 'Sonderposition',
+                    count: 1,
+                    price: value,
+                    sum: value
+                };
 
-                accountingService.addBillingEntry(0, addEntry.count, addEntry.price).then(function (result) {
-                    addEntry.id = result;
-                });
-
+                billingService.addEntry(addEntry);
                 $scope.entries.push(addEntry);
             }
         };
 
-        $scope.changeCount = function (entry) {
-            $scope.changeEntry = entry;
-            $scope.removeEntry = null;
+        $scope.changeCount = function (event, entry) {
+            event.stopPropagation();
+
+            $scope.numberEntry = entry;
             $scope.changeMode = 'count';
-            $scope.$broadcast('numberPadValue', entry.count);
+
+            resetSelected();
+
+            $scope.$broadcast('numberpad:value', entry.count);
         };
 
-        $scope.changePrice = function (entry) {
-            $scope.changeEntry = entry;
-            $scope.removeEntry = null;
+        $scope.changePrice = function (event, entry) {
+            event.stopPropagation();
+
+            $scope.numberEntry = entry;
             $scope.changeMode = 'price';
-            $scope.$broadcast('numberPadValue', entry.price);
-        };
 
-        $scope.showRemove = function (entry) {
-            $scope.changeEntry = null;
-            $scope.removeEntry = entry;
-        };
+            resetSelected();
 
-        $scope.cancelRemove = function () {
-            $scope.changeEntry = null;
-            $scope.removeEntry = null;
-        };
-
-        $scope.remove = function (index) {
-            var removeEntry = $scope.entries[index];
-
-            accountingService.removeBillingEntry(removeEntry.id);
-
-            $scope.entries.splice(index, 1);
+            $scope.$broadcast('numberpad:value', entry.price);
         };
 
         $scope.amount = 0;
     }
-
-    app.resolver.BonController = {
-        /**
-         * @param {ProductService} productService
-         */
-        products: function (productService) {
-            return productService.getProducts();
-        }
-    };
 
     app.module.controller('bonController', BonController);
 })();

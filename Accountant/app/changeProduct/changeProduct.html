@@ -1,0 +1,30 @@
+<div class="panel panel-default">
+    <div class="panel-body">
+        <form class="form-horizontal" name="form">
+            <div class="form-group">
+                <label for="name" class="control-label col-md-3">Produktbezeichnung</label>
+
+                <div class="col-md-9">
+                    <input type="text" class="form-control" id="name" placeholder="Name" required ng-model="product.name">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="price" class="control-label col-md-3">Einzelpreis</label>
+
+                <div class="col-md-9">
+                    <input type="text" class="form-control col-md-9" id="price" placeholder="Preis" required ng-model="product.price">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="stock" class="control-label col-md-3">Lagermenge</label>
+
+                <div class="col-md-9">
+                    <input type="text" class="form-control col-md-9" id="stock" placeholder="Menge" required ng-model="product.stock">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary pull-right" ng-click="add()" ng-disabled="form.$invalid">Hinzufügen</button>
+        </form>
+    </div>
+</div>
+
+<bill-notifier></bill-notifier>
