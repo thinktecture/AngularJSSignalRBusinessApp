@@ -15,7 +15,7 @@
 
         $scope.entries = [];
 
-        resetSelected();
+        resetEntry();
 
         $scope.$on(productService.$productAdded, function (event, product) {
             $scope.products.push(product);
@@ -42,22 +42,22 @@
             $scope.amount = sum;
         }, true);
 
-        $scope.$watch('selected.product', function (newValue) {
+        $scope.$watch('entry.product', function (newValue) {
             if (newValue) {
                 if (!$scope.form.price.$dirty) {
-                    $scope.selected.price = newValue.price;
+                    $scope.entry.price = newValue.price;
                 }
             }
         });
 
         $scope.countDown = function () {
-            if ($scope.selected.count > 1) {
-                $scope.selected.count--;
+            if ($scope.entry.count > 1) {
+                $scope.entry.count--;
             }
         };
 
         $scope.countUp = function () {
-            $scope.selected.count++;
+            $scope.entry.count++;
         };
 
         function resetNumberPad() {
@@ -65,31 +65,30 @@
             $scope.$broadcast('numberpad:value', 0);
         }
 
-        function resetSelected() {
-            $scope.selected = { count: 1 };
+        function resetEntry() {
+            $scope.entry = { count: 1 };
         }
 
-        $scope.edit = function (entry, index) {
+        $scope.edit = function (entry) {
             if (entry.remove) {
                 return;
             }
 
-            entry.$index = index;
             entry.previousCount = entry.count;
 
             $scope.numberEntry = null;
             $scope.$broadcast('numberpad:value', 0);
 
-            $scope.selected = angular.extend({}, entry);
+            $scope.entry = angular.extend({}, entry);
         };
 
         $scope.cancel = function () {
-            resetSelected();
+            resetEntry();
         };
 
         $scope.add = function () {
-            var entry = $scope.selected;
-            resetSelected();
+            var entry = $scope.entry;
+            resetEntry();
 
             entry.text = entry.product.name;
             entry.sum = entry.count * entry.price;
@@ -100,29 +99,37 @@
         };
 
         $scope.change = function () {
-            var entry = $scope.selected;
-            resetSelected();
+            var entry = $scope.entry;
+            resetEntry();
 
             entry.text = entry.product.name;
             entry.sum = entry.count * entry.price;
 
             billingService.changeEntry(entry);
 
-            var index = entry.$index;
-            delete entry.$index;
-
-            angular.extend($scope.entries[index], entry);
+            for (var i = 0; i < $scope.entries.length; i++) {
+                var item = $scope.entries[i];
+                if (item.id === entry.id) {
+                    angular.extend(item, entry);
+                    break;
+                }
+            }
         };
 
-        $scope.remove = function (entry, index) {
+        $scope.remove = function (entry) {
             billingService.removeEntry(entry);
 
             entry.remove = true;
 
             resetNumberPad();
-            resetSelected();
+            resetEntry();
 
-            $scope.entries.splice(index, 1);
+            for (var i = 0; i < $scope.entries.length; i++) {
+                if ($scope.entries[i].id === entry.id) {
+                    $scope.entries.splice(i, 1);
+                    break;
+                }
+            }
         };
 
         $scope.number = function (value) {
@@ -164,7 +171,7 @@
             $scope.numberEntry = entry;
             $scope.changeMode = 'count';
 
-            resetSelected();
+            resetEntry();
 
             $scope.$broadcast('numberpad:value', entry.count);
         };
@@ -175,7 +182,7 @@
             $scope.numberEntry = entry;
             $scope.changeMode = 'price';
 
-            resetSelected();
+            resetEntry();
 
             $scope.$broadcast('numberpad:value', entry.price);
         };

@@ -55,6 +55,16 @@ tr.entry.ng-leave {
     text-align: right !important;
 }
 
+.scroll {
+    max-height: 300px;
+    overflow: scroll;
+    -webkit-overflow-scrolling: touch;
+}
+
 .panel-body .table {
     margin-bottom: 0;
+}
+
+.panel-body .row + .row {
+    margin-top: 20px;
 }

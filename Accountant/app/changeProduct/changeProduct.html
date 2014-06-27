@@ -1,29 +1,54 @@
 <div class="panel panel-default">
     <div class="panel-body">
-        <form class="form-horizontal" name="form">
-            <div class="form-group">
-                <label for="name" class="control-label col-md-3">Produktbezeichnung</label>
-
-                <div class="col-md-9">
-                    <input type="text" class="form-control" id="name" placeholder="Name" required ng-model="product.name">
-                </div>
+        <div class="scroll row">
+            <div class="col-sm-12">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th class="right">Einzelpr.</th>
+                        <th class="right">Verfügbar</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="item in products" ng-class="{ info: item === product }" ng-click="edit(item)">
+                        <td>{{item.name}}</td>
+                        <td class="right">{{item.price | number:2}}</td>
+                        <td class="right">{{item.stock}}</td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
-            <div class="form-group">
-                <label for="price" class="control-label col-md-3">Einzelpreis</label>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <form class="form-horizontal" name="form">
+                    <div class="form-group">
+                        <label for="name" class="control-label col-md-3">Produktbezeichnung</label>
 
-                <div class="col-md-9">
-                    <input type="text" class="form-control col-md-9" id="price" placeholder="Preis" required ng-model="product.price">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="stock" class="control-label col-md-3">Lagermenge</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" id="name" placeholder="Name" required ng-model="product.name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="price" class="control-label col-md-3">Einzelpreis</label>
 
-                <div class="col-md-9">
-                    <input type="text" class="form-control col-md-9" id="stock" placeholder="Menge" required ng-model="product.stock">
-                </div>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control col-md-9" id="price" placeholder="Preis" required ng-model="product.price">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="stock" class="control-label col-md-3">Lagermenge</label>
+
+                        <div class="col-md-9">
+                            <input type="text" class="form-control col-md-9" id="stock" placeholder="Menge" required ng-model="product.stock">
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-warning pull-left" ng-click="cancel()" ng-show="product">Abbrechen</button>
+                    <button type="submit" class="btn btn-primary pull-right" ng-click="change()" ng-disabled="form.$invalid">Ändern</button>
+                </form>
             </div>
-            <button type="submit" class="btn btn-primary pull-right" ng-click="add()" ng-disabled="form.$invalid">Hinzufügen</button>
-        </form>
+        </div>
     </div>
 </div>
 

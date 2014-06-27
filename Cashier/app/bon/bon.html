@@ -2,7 +2,7 @@
     <div class="col-sm-9">
         <div class="panel panel-default">
             <div class="panel-body">
-                <div class="bill row">
+                <div class="scroll row">
                     <div class="col-sm-12">
                         <table class="table">
                             <thead>
@@ -15,12 +15,12 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr class="entry animate" ng-repeat="entry in entries" ng-class="{ info: $index === selected.$index }" ng-swipe-left="remove(entry, $index)" ng-click="edit(entry, $index)">
+                            <tr class="entry animate" ng-repeat="item in entries" ng-class="{ info: item === entry }" ng-swipe-left="remove(item)" ng-click="edit(item)">
                                 <td>{{$index + 1}}</td>
-                                <td>{{entry.text}}</td>
-                                <td class="right" ng-class="{ warning: entry === numberEntry && changeMode === 'count' }" ng-click="changeCount($event, entry)">{{entry.count}}</td>
-                                <td class="right" ng-class="{ warning: entry === numberEntry && changeMode === 'price' }" ng-click="changePrice($event, entry)">{{entry.price | number:2}}</td>
-                                <td class="right">{{entry.sum | number:2}}</td>
+                                <td>{{item.text}}</td>
+                                <td class="right" ng-class="{ warning: item === numberEntry && changeMode === 'count' }" ng-click="changeCount($event, item)">{{item.count}}</td>
+                                <td class="right" ng-class="{ warning: item === numberEntry && changeMode === 'price' }" ng-click="changePrice($event, item)">{{item.price | number:2}}</td>
+                                <td class="right">{{item.sum | number:2}}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -33,14 +33,14 @@
                                 <label for="product" class="col-sm-3 control-label">Produkt</label>
 
                                 <div class="col-sm-9">
-                                    <button type="button" class="btn btn-default" id="product" name="product" ng-model="selected.product" ng-options="product as product.name for product in products" bs-select placeholder="Produkt wählen" required></button>
+                                    <button type="button" class="btn btn-default" id="product" name="product" ng-model="entry.product" ng-options="product as product.name for product in products" bs-select placeholder="Produkt wählen" required></button>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="count" class="col-sm-3 control-label">Menge</label>
 
                                 <div class="col-sm-2">
-                                    <input type="number" class="form-control" id="count" name="count" ng-model="selected.count" required>
+                                    <input type="number" class="form-control" id="count" name="count" ng-model="entry.count" required>
                                 </div>
                                 <div class="col-sm-5">
                                     <button type="button" class="btn btn-danger" ng-click="countDown()">- 1</button>
@@ -51,13 +51,13 @@
                                 <label for="price" class="col-sm-3 control-label">Preis</label>
 
                                 <div class="col-sm-3">
-                                    <input type="text" class="form-control" id="price" name="price" ng-model="selected.price" required>
+                                    <input type="text" class="form-control" id="price" name="price" ng-model="entry.price" required>
                                 </div>
                             </div>
                         </form>
-                        <button type="button" class="btn btn-warning btn-lg pull-left" ng-click="cancel()" ng-show="selected.$index >= 0">Abbrechen</button>
-                        <button type="button" class="btn btn-primary btn-lg pull-right" ng-click="add()" ng-hide="selected.$index >= 0" ng-disabled="form.$invalid">Hinzufügen</button>
-                        <button type="button" class="btn btn-primary btn-lg pull-right" ng-click="change()" ng-show="selected.$index >= 0" ng-disabled="form.$invalid">Ändern</button>
+                        <button type="button" class="btn btn-warning btn-lg pull-left" ng-click="cancel()" ng-show="entry.id">Abbrechen</button>
+                        <button type="button" class="btn btn-primary btn-lg pull-right" ng-click="add()" ng-hide="entry.id" ng-disabled="form.$invalid">Hinzufügen</button>
+                        <button type="button" class="btn btn-primary btn-lg pull-right" ng-click="change()" ng-show="entry.id" ng-disabled="form.$invalid">Ändern</button>
                     </div>
                 </div>
             </div>

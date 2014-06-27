@@ -57,24 +57,28 @@ tr.entry.ng-enter.ng-enter-active {
     text-align: right !important;
 }
 
-number-pad .row {
-    margin-bottom: 15px;
-}
-
-number-pad .row:last-child {
-    margin-bottom: 0;
-}
-
-.bill {
+.scroll {
     max-height: 300px;
     overflow: scroll;
     -webkit-overflow-scrolling: touch;
+}
+
+.panel-body .table {
+    margin-bottom: 0;
+}
+
+.panel-body .row + .row {
+    margin-top: 20px;
 }
 
 .panel-footer.lead {
     margin-bottom: 0;
 }
 
-a:hover {
-    text-decoration: none !important;
+number-pad .row {
+    margin-bottom: 15px;
+}
+
+number-pad .row:last-child {
+    margin-bottom: 0;
 }
