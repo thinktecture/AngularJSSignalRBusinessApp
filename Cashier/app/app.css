@@ -7,6 +7,7 @@ body {
     -webkit-touch-callout: none;
     -webkit-text-size-adjust: none;
     -webkit-user-select: none;
+    background-color: rgba(255, 236, 112, 0.44) !important;
 }
 
 [ng-click] {
