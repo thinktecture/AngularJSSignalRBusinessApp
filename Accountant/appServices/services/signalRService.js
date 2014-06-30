@@ -5,7 +5,7 @@
      * @constructor
      */
     function SignalRService($q, $rootScope) {
-        var connection = $.hubConnection('http://192.168.0.22:8091/signalr');
+        var connection = $.hubConnection('http://10.37.129.3:8091/signalr');
         connection.logging = true;
         connection.disconnected(function () {
             connection.start();

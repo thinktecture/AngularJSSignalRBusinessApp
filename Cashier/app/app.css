@@ -59,7 +59,7 @@ tr.entry.ng-enter.ng-enter-active {
 
 .scroll {
     max-height: 300px;
-    overflow: scroll;
+    overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
 }
 

@@ -57,7 +57,7 @@ tr.entry.ng-leave {
 
 .scroll {
     max-height: 300px;
-    overflow: scroll;
+    overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
 }
 
