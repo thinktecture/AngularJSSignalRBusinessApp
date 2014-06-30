@@ -9,8 +9,19 @@
      * @constructor
      */
     function BonController($scope, alertService, productService, billingService) {
+        function productSorter(a, b) {
+            var aname = a.name.toLowerCase(), bname = b.name.toLowerCase();
+
+            if (aname === bname) {
+                return 0;
+            }
+
+            return aname > bname ? 1 : -1;
+        }
+
         productService.getProducts().then(function (products) {
             $scope.products = products;
+            $scope.products.sort(productSorter);
         });
 
         $scope.entries = [];
@@ -28,7 +39,8 @@
                 var item = $scope.products[i];
                 if (item.id === product.id) {
                     angular.extend(item, product);
-                    return;
+                    $scope.products.sort(productSorter);
+                    break;
                 }
             }
         });
@@ -151,17 +163,6 @@
                 }
 
                 changeEntry.sum = changeEntry.count * changeEntry.price;
-            } else {
-                var addEntry = {
-                    product: {},
-                    text: 'Sonderposition',
-                    count: 1,
-                    price: value,
-                    sum: value
-                };
-
-                billingService.addEntry(addEntry);
-                $scope.entries.push(addEntry);
             }
         };
 

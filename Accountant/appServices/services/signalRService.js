@@ -5,7 +5,7 @@
      * @constructor
      */
     function SignalRService($q, $rootScope) {
-        var connection = $.hubConnection('http://192.168.0.71:8091/signalr');
+        var connection = $.hubConnection('http://192.168.0.22:8091/signalr');
         connection.logging = true;
         connection.disconnected(function () {
             connection.start();
@@ -39,7 +39,7 @@
         this.call = function (hub, methodName) {
             var args = $.makeArray(arguments).slice(1);
 
-            return this.connect().then(function(){
+            return this.connect().then(function () {
                 var defer = $q.defer();
 
                 hub.invoke.apply(hub, args).done(defer.resolve, defer.reject, defer.notify);
@@ -63,7 +63,6 @@
             });
 
             return defer.promise;
-
         };
     }
 

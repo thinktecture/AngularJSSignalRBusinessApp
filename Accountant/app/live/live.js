@@ -20,25 +20,29 @@
             products[product.id] = product;
         });
 
+        $scope.$on(productService.$productChanged, function (event, product) {
+            angular.extend(products[product.id], product);
+        });
+
         $scope.entries = [];
 
         $scope.$on(billingService.$entryAdded, function (event, id, productId, count, price) {
-            var product = products[productId] || { name: 'Sonderposition' };
+            var product = products[productId] || { id: productId, name: 'Unbekanntes Produkt' };
 
-            $scope.entries.push({ id: id, text: product.name, count: count, price: price, sum: count * price });
+            $scope.entries.push({ id: id, product: product, count: count, price: price, sum: count * price });
 
-            if ($scope.entries.length > 20) {
-                $scope.entries.pop();
+            if ($scope.entries.length > 10) {
+                $scope.entries.shift();
             }
         });
 
         $scope.$on(billingService.$entryChanged, function (event, id, productId, count, price) {
-            var product = products[productId] || { name: 'Sonderposition' };
+            var product = products[productId] || { id: productId, name: 'Unbekanntes Produkt' };
 
             for (var i = 0; i < $scope.entries.length; i++) {
                 var entry = $scope.entries[i];
                 if (entry.id === id) {
-                    angular.extend(entry, { text: product.name, count: count, price: price, sum: count * price });
+                    angular.extend(entry, { product: product, count: count, price: price, sum: count * price });
                     break;
                 }
             }

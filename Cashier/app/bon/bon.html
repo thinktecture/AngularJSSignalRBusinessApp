@@ -17,7 +17,7 @@
                             <tbody>
                             <tr class="entry animate" ng-repeat="item in entries" ng-class="{ info: item.id === entry.id }" ng-swipe-left="remove(item)" ng-click="edit(item)">
                                 <td>{{$index + 1}}</td>
-                                <td>{{item.text}}</td>
+                                <td>{{item.product.name}}</td>
                                 <td class="right" ng-class="{ warning: item === numberEntry && changeMode === 'count' }" ng-click="changeCount($event, item)">{{item.count}}</td>
                                 <td class="right" ng-class="{ warning: item === numberEntry && changeMode === 'price' }" ng-click="changePrice($event, item)">{{item.price | number:2}}</td>
                                 <td class="right">{{item.sum | number:2}}</td>
