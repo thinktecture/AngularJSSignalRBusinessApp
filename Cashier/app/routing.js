@@ -4,7 +4,7 @@
     app.module.config(function routeConfig($routeProvider) {
         $routeProvider
             .when('/bon', {
-                templateUrl: '/app/bon/bon.html',
+                templateUrl: 'app/bon/bon.html',
                 controller: 'bonController'
             })
 

@@ -4,15 +4,15 @@
     app.module.config(function routeConfig($routeProvider) {
         $routeProvider
             .when('/addProduct', {
-                templateUrl: '/app/addProduct/addProduct.html',
+                templateUrl: 'app/addProduct/addProduct.html',
                 controller: 'addProductController'
             })
             .when('/changeProduct', {
-                templateUrl: '/app/changeProduct/changeProduct.html',
+                templateUrl: 'app/changeProduct/changeProduct.html',
                 controller: 'changeProductController'
             })
             .when('/live', {
-                templateUrl: '/app/live/live.html',
+                templateUrl: 'app/live/live.html',
                 controller: 'liveController'
             })
 
