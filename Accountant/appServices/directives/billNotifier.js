@@ -27,7 +27,7 @@
                     var product = products[productId];
 
                     if (product) {
-                        alertService.show('Neuer Umsatz!', 'Soeben wurde ' + product.name + ' im Gesamtwert von ' + turnover + '€ verkauft.');
+                        alertService.show('Neuer Umsatz!', '"' + product.name + '" wurde soeben im Gesamtwert von ' + turnover + '€ verkauft.');
                     }
                     else {
                         alertService.show('Neuer Umsatz!', 'Soeben wurden Waren im Gesamtwert von ' + turnover + '€ verkauft.');

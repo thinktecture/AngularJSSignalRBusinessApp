@@ -83,3 +83,14 @@ number-pad .row {
 number-pad .row:last-child {
     margin-bottom: 0;
 }
+
+.nav:after,
+.navbar:after,
+.navbar-header:after,
+.navbar-collapse:after {
+    clear: none !important;
+}
+
+.navbar-nav li {
+    float: left;
+}

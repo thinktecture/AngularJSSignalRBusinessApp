@@ -1,13 +1,13 @@
 <div class="panel panel-default">
     <div class="panel-body">
         <div class="scroll row">
-            <div class="col-sm-12">
+            <div class="col-xs-12">
                 <table class="table">
                     <thead>
                     <tr>
                         <th>Name</th>
-                        <th class="right">Einzelpr.</th>
-                        <th class="right">Verfügbar</th>
+                        <th class="right col-xs-2">Einzelpr.</th>
+                        <th class="right col-xs-2">Verfügbar</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -21,27 +21,27 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-12">
+            <div class="col-xs-12">
                 <form class="form-horizontal" name="form">
                     <div class="form-group">
-                        <label for="name" class="control-label col-md-3">Produktbezeichnung</label>
+                        <label for="name" class="control-label col-xs-3">Produktbezeichnung</label>
 
-                        <div class="col-md-9">
+                        <div class="col-xs-9">
                             <input type="text" class="form-control" id="name" placeholder="Name" required ng-model="product.name">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="price" class="control-label col-md-3">Einzelpreis</label>
+                        <label for="price" class="control-label col-xs-3">Einzelpreis</label>
 
-                        <div class="col-md-9">
-                            <input type="text" class="form-control col-md-9" id="price" placeholder="Preis" required ng-model="product.price">
+                        <div class="col-xs-9">
+                            <input type="text" class="form-control col-xs-9" id="price" placeholder="Preis" required ng-model="product.price">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="stock" class="control-label col-md-3">Lagermenge</label>
+                        <label for="stock" class="control-label col-xs-3">Lagermenge</label>
 
-                        <div class="col-md-9">
-                            <input type="text" class="form-control col-md-9" id="stock" placeholder="Menge" required ng-model="product.stock">
+                        <div class="col-xs-9">
+                            <input type="text" class="form-control col-xs-9" id="stock" placeholder="Menge" required ng-model="product.stock">
                         </div>
                     </div>
                     <button type="button" class="btn btn-warning pull-left" ng-click="cancel()" ng-show="product">Abbrechen</button>

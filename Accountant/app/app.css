@@ -1,5 +1,5 @@
 * {
-    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 body {
@@ -67,4 +67,15 @@ tr.entry.ng-leave {
 
 .panel-body .row + .row {
     margin-top: 20px;
+}
+
+.nav:after,
+.navbar:after,
+.navbar-header:after,
+.navbar-collapse:after {
+    clear: none !important;
+}
+
+.navbar-nav li {
+    float: left;
 }

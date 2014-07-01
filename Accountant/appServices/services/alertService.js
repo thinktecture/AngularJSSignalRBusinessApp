@@ -19,7 +19,7 @@
             $timeout.cancel(last);
             last = $timeout(function () {
                 $rootScope.alert.visible = false;
-            }, 2000);
+            }, 5000);
         }
     }
 
