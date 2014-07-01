@@ -26,7 +26,7 @@ namespace Backend.Model
 				new Product() { Id = Guid.NewGuid(), Name= "Danone Actimel Drink", Price = 2.22m, Stock = random.Next(10, 100) },
 				new Product() { Id = Guid.NewGuid(), Name= "Lavazza Crema E Aroma", Price = 10.99m, Stock = random.Next(10, 100) },
 				new Product() { Id = Guid.NewGuid(), Name= "Tassimo Caffè Crema", Price = 3.79m, Stock = random.Next(10, 100) },
-				new Product() { Id = Guid.NewGuid(), Name= "iglo Feine Landschnitzel Wiender Art", Price = 3.49m, Stock = random.Next(10, 100) },
+				new Product() { Id = Guid.NewGuid(), Name= "iglo Feine Landschnitzel Wiener Art", Price = 3.49m, Stock = random.Next(10, 100) },
 				new Product() { Id = Guid.NewGuid(), Name= "Lagnese Cornetto Schokolade", Price = 1.99m, Stock = random.Next(10, 100) },
 				new Product() { Id = Guid.NewGuid(), Name= "McCain Chef Frites", Price = 1.11m, Stock = random.Next(10, 100) },
 				new Product() { Id = Guid.NewGuid(), Name= "Catsan Hygiene-Streu", Price = 6.99m, Stock = random.Next(10, 100) }
